@@ -1668,8 +1668,10 @@
             return this._srcObject;
         },
         "set": function (stream) {
+            console.log("VOI VOI 1")
             this._srcObject = stream;
             this.src = url.createObjectURL(stream);
+            console.log("VOI VOI 2")
         }
     }); 
 
