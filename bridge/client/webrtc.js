@@ -294,6 +294,11 @@
         return "[object MediaStreamTrack]";
     };
 
+
+    MediaStreamTrack.getSources = function () {
+        return [];
+    };
+
     function MediaStreamError(initDict) {
         if (!initDict)
             initDict = {};
@@ -1634,6 +1639,7 @@
     }
 
     global.webkitMediaStream = MediaStream;
+    global.MediaStreamTrack = MediaStreamTrack;
     global.webkitRTCPeerConnection = RTCPeerConnection;
     global.RTCSessionDescription = RTCSessionDescription;
     global.RTCIceCandidate = RTCIceCandidate;
