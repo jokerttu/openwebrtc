@@ -107,6 +107,11 @@ function PeerHandler(configuration, client, jsonRpc) {
                     cand.relatedPort = candidate.base_port || 9;
                 }
 
+                if (mdesc.ice && mdesc.ice.ufrag && mdesc.ice.password) {
+                    candidate.ufrag = mdesc.ice.ufrag;
+                    candidate.password = mdesc.ice.password;
+                }
+
                 var mdescIndex = localSessionInfo.mediaDescriptions.indexOf(mdesc);
                 client.gotIceCandidate(mdescIndex, cand, candidate.ufrag, candidate.password);
             });
@@ -143,6 +148,11 @@ function PeerHandler(configuration, client, jsonRpc) {
         function prepareMediaSession(mediaSession, mdesc) {
             prepareSession(mediaSession, mdesc);
             mediaSession.rtcp_mux = !isInitiator && !!(mdesc.rtcp && mdesc.rtcp.mux);
+
+            if (mdesc.cname && mdesc.ssrcs && mdesc.ssrcs.length) {
+                mediaSession.cname = mdesc.cname;
+                mediaSession.send_ssrc = mdesc.ssrcs[0];
+            }
 
             mediaSession.signal.connect("notify::send-ssrc", function () {
                 var mdescIndex = localSessionInfo.mediaDescriptions.indexOf(mdesc);
